@@ -99,22 +99,37 @@ f_images = {
     7:"https://4.bp.blogspot.com/-E7a2JiOK770/UrEgC4QPotI/AAAAAAAAb2s/Ucoh7CD2y2k/s800/nettaiya.png"
 }
 
-print(humid_array[time])
-print(temp_array[time])
+#print(humid_array[time])
+#print(temp_array[time])
 
-name = "現在の札幌市厚別区の気温は" + str(temp_array[time]) + "度、湿度は" + str(humid_array[time]) + "%となり、" + "不快指数は『" + f_comment[i] + "』状態です。"
+## ラズパイ
+# 家のラズパイからMosquito経由で温度情報を受信し、home.txtに蓄積している
+# 下記でhome.txtを読みこみ、リストに全て投入し、最新情報だけをtemp変数に代入
+f = open('C:\home.txt', 'r')
+datalist = f.readlines()
+temp = datalist[-1]
+
+#　改行の削除
+temp = temp.replace( '\n' , '' )
+
+
+
+
+fukai1 = "現在の札幌市厚別区の気温は" + str(temp_array[time]) + "度、湿度は" + str(humid_array[time]) + "%となり、" 
+fukai2 = "不快指数は『" + f_comment[i] + "』状態です。"
 img = f_images[i]
+home = "ちなみに部屋の温度は" + str(temp) + "度です"
 
 ## FLASKの起動
 from flask import Flask, render_template
 
 app = Flask(__name__)
 
-@app.route("/sapporo")
+@app.route("/")
 def index():
 # 不快指数と画像の読み込み
-    return render_template("sapporo.html", name_value = name, img_value = img)
+    return render_template("index.html", fukai1_value = fukai1, fukai2_value = fukai2, img_value = img, home_value = home)
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host='0.0.0.0')
 
