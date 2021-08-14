@@ -110,10 +110,10 @@ from flask import Flask, render_template
 
 app = Flask(__name__)
 
-@app.route("/")
+@app.route("/sapporo")
 def index():
 # 不快指数と画像の読み込み
-    return render_template("index.html", name_value = name, img_value = img)
+    return render_template("sapporo.html", name_value = name, img_value = img)
 
 if __name__ == "__main__":
     app.run()
