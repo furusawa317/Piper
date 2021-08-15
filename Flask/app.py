@@ -1,88 +1,8 @@
-import numpy as np
-import requests
-import bs4
-
-URL = 'https://tenki.jp/forecast/1/2/1400/1108/1hour.html'
-
-r = requests.get(URL)
-s = bs4.BeautifulSoup(r.text, 'html.parser')
-
-## 気温の取り込み
-# 気温リストの作成
-list_temp= []
-
-#入れ子の要素取得（取得要素の絞り込み）
-for j in s.find_all('tr' , class_ ='temperature'):
-    for i in j.find_all("span"):
-        list_temp.append(i.string)
-
-temp = []
-for i in range(0,24,1):
-#    print(list_temp[i])
-    temp.append(list_temp[i])
-
-## 湿度の取り込み
-#湿度リストの作成
-list_humid= []
-
-#入れ子の要素取得（取得要素の絞り込み）
-for j in s.find_all('tr' , class_ ='humidity'):
-    for i in j.find_all("span"):
-        list_humid.append(i.string)
-
-humid=[]
-for i in range(1,25,1):
-#    print(list_humid[i])
-    humid.append(list_humid[i])
-
-## アレイ化
-# 気温
-temp_array = np.array(temp, dtype=float)
-#print(temp_array)
-
-# 湿度
-humid_array = np.array(humid, dtype=float)
-print(humid_array)
-
-## 不快指数の計算
-# 不快指数＝0.81×温度+0.01×湿度x（0.99×温度－14.3）+46.3
-
-f_index_array = 0.81 * temp_array + 0.01 * humid_array * (0.99 * temp_array - 14.3) +46.3
-
-#print(f_index_array)
-
-# 不快指数のリスト化
-f_index = f_index_array.tolist()
-
-#print(f_index)
-
-
-# 現在の不快指数（予報）の表示
-import datetime
-dt_now = datetime.datetime.now()
-time = int(dt_now.strftime('%H'))
-#print(f_index[time])
-
-now_f_index = round(f_index[time])
-print(now_f_index)
-
-# 現在の不快指数（予報）による分岐
-if now_f_index < 55:
-    i = 0
-elif now_f_index < 60:
-    i = 1
-elif now_f_index < 65:
-    i = 2
-elif now_f_index < 70:
-    i = 3
-elif now_f_index < 75:
-    i = 4
-elif now_f_index < 80:
-    i = 5
-elif now_f_index < 85:
-    i = 6
-elif now_f_index >= 85:
-    i = 7
+import fukai
+import hantei
+import fukai_t
+import hantei_t
+import home_temp
 
 # 不快指数コメント用リスト
 f_comment = ["寒い", "肌寒い", "何も感じない", "快い", "暑くない", "やや暑い", "暑くて汗がでる", "暑くてたまらない"]
@@ -102,23 +22,13 @@ f_images = {
 #print(humid_array[time])
 #print(temp_array[time])
 
-## ラズパイ
-# 家のラズパイからMosquito経由で温度情報を受信し、home.txtに蓄積している
-# 下記でhome.txtを読みこみ、リストに全て投入し、最新情報だけをtemp変数に代入
-f = open('C:\home.txt', 'r')
-datalist = f.readlines()
-temp = datalist[-1]
-
-#　改行の削除
-temp = temp.replace( '\n' , '' )
-
-
-
-
-fukai1 = "現在の札幌市厚別区の気温は" + str(temp_array[time]) + "度、湿度は" + str(humid_array[time]) + "%となり、" 
-fukai2 = "不快指数は『" + f_comment[i] + "』状態です。"
-img = f_images[i]
-home = "ちなみに部屋の温度は" + str(temp) + "度です"
+fukai1 = "現在の札幌市厚別区の気温は" + str(fukai.temp_array[hantei.time]) + "度、湿度は" + str(fukai.humid_array[hantei.time]) + "%となり、" 
+fukai2 = "不快指数は『" + f_comment[hantei.n] + "』状態です。"
+img1 = f_images[hantei.n]
+home = "ちなみに部屋の温度は" + str(home_temp.home_temp) + "度です"
+fukai3 = "さらにちなみに現在の東京都千代田区の気温は" + str(fukai_t.temp_array_t[hantei.time]) + "度、湿度は" + str(fukai_t.humid_array_t[hantei.time]) + "%となり、" 
+fukai4 = "不快指数は『" + f_comment[hantei_t.m] + "』状態です。"
+img2 = f_images[hantei_t.m]
 
 ## FLASKの起動
 from flask import Flask, render_template
@@ -128,7 +38,8 @@ app = Flask(__name__)
 @app.route("/")
 def index():
 # 不快指数と画像の読み込み
-    return render_template("index.html", fukai1_value = fukai1, fukai2_value = fukai2, img_value = img, home_value = home)
+    return render_template("index.html", fukai1_value = fukai1, fukai2_value = fukai2, fukai3_value = fukai3, fukai4_value = fukai4, 
+    img1_value = img1, img2_value = img2, home_value = home)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
