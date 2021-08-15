@@ -7,7 +7,7 @@ time = int(dt_now.strftime('%H'))
 #print(f_index[time])
 
 now_f_index = round(fukai.f_index[time])
-print(now_f_index)
+#print(now_f_index)
 
 # 現在の不快指数（予報）による分岐
 if now_f_index < 55:
@@ -27,4 +27,4 @@ elif now_f_index < 85:
 elif now_f_index >= 85:
     n = 7
 
-print(n)
+#print(n)

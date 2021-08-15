@@ -12,7 +12,7 @@ humid_array_t = np.array(scraping_t.humid_t, dtype=float)
 
 ## 不快指数の計算
 # 不快指数＝0.81×温度+0.01×湿度x（0.99×温度－14.3）+46.3
-f_index_array_t = 0.81 * temp_array_t + 0.01 * humid_array_t * (0.99 * temp_array_t - 14.3) +46.3
+f_index_array_t = 0.81 * temp_array_t + 0.01 * humid_array_t * (0.99 * temp_array_t - 14.3) + 46.3
 #print(f_index_array)
 
 # 不快指数のリスト化
