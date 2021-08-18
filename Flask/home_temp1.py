@@ -4,7 +4,7 @@
 
 import boto3
 import json
-from collections import OrderedDict
+#from collections import OrderedDict
 import pprint
 
 s3 = boto3.resource('s3')
