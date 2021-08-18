@@ -2,7 +2,8 @@ import fukai
 import hantei
 import fukai_t
 import hantei_t
-import home_temp
+import home_temp1
+import hantei_h
 
 # 不快指数コメント用リスト
 f_comment = ["寒い", "肌寒い", "何も感じない", "快い", "暑くない", "やや暑い", "暑くて汗がでる", "暑くてたまらない"]
@@ -22,13 +23,12 @@ f_images = {
 #print(humid_array[time])
 #print(temp_array[time])
 
-fukai1 = "現在の札幌市厚別区の気温は" + str(fukai.temp_array[hantei.time]) + "度、湿度は" + str(fukai.humid_array[hantei.time]) + "%となり、" 
-fukai2 = "不快指数は『" + f_comment[hantei.n] + "』状態です。"
+fukai1 = "現在の札幌市厚別区の気温は" + str(fukai.temp_array[hantei.time]) + "度、湿度は" + str(fukai.humid_array[hantei.time]) + "%となり、不快指数は『" + f_comment[hantei.n] + "』状態です。"
 img1 = f_images[hantei.n]
-home = "ちなみに部屋の温度は" + str(home_temp.home_temp) + "度です"
-fukai3 = "さらにちなみに現在の東京都千代田区の気温は" + str(fukai_t.temp_array_t[hantei.time]) + "度、湿度は" + str(fukai_t.humid_array_t[hantei.time]) + "%となり、" 
-fukai4 = "不快指数は『" + f_comment[hantei_t.m] + "』状態です。"
-img2 = f_images[hantei_t.m]
+home1 = "ちなみに部屋の温度は" + str(home_temp1.home_temp["TEMPERATURE"]) + "度、湿度は" + str(home_temp1.home_temp["HUMIDITY"] ) + "%となり、不快指数は『" + f_comment[hantei_h.h] + "』状態です。"
+img2 = f_images[hantei_h.h]
+fukai2 = "さらにちなみに現在の東京都千代田区の気温は" + str(fukai_t.temp_array_t[hantei.time]) + "度、湿度は" + str(fukai_t.humid_array_t[hantei.time]) + "%となり、不快指数は『" + f_comment[hantei_t.m] + "』状態です。"
+img3 = f_images[hantei_t.m]
 
 ## FLASKの起動
 from flask import Flask, render_template
@@ -38,9 +38,9 @@ app = Flask(__name__)
 @app.route("/")
 def index():
 # 不快指数と画像の読み込み
-    return render_template("index.html", fukai1_value = fukai1, fukai2_value = fukai2, fukai3_value = fukai3, fukai4_value = fukai4, 
-    img1_value = img1, img2_value = img2, home_value = home)
+    return render_template("index.html", fukai1_value = fukai1, fukai2_value = fukai2, 
+    img1_value = img1, img2_value = img2, img3_value = img3, home1_value = home1)
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', port=80)
 
