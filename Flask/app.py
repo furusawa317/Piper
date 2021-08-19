@@ -1,8 +1,8 @@
-import fukai
-import hantei
+import fukai_s
+import hantei_s
 import fukai_t
 import hantei_t
-import home_temp1
+import temphumid_h
 import hantei_h
 
 # 不快指数コメント用リスト
@@ -23,11 +23,11 @@ f_images = {
 #print(humid_array[time])
 #print(temp_array[time])
 
-fukai1 = "現在の札幌市厚別区の気温は" + str(fukai.temp_array[hantei.time]) + "度、湿度は" + str(fukai.humid_array[hantei.time]) + "%となり、不快指数は『" + f_comment[hantei.n] + "』状態です。"
-img1 = f_images[hantei.n]
-home1 = "ちなみに部屋の温度は" + str(home_temp1.home_temp["TEMPERATURE"]) + "度、湿度は" + str(home_temp1.home_temp["HUMIDITY"] ) + "%となり、不快指数は『" + f_comment[hantei_h.h] + "』状態です。"
+fukai1 = "現在の札幌市厚別区の気温は" + str(fukai_s.temp_array[hantei_s.time]) + "度、湿度は" + str(fukai_s.humid_array[hantei_s.time]) + "%となり、不快指数は『" + f_comment[hantei_s.n] + "』状態です。"
+img1 = f_images[hantei_s.n]
+home1 = "ちなみに部屋の温度は" + str(temphumid_h.h_temp) + "度、湿度は" + str(temphumid_h.h_humid) + "%となり、不快指数は『" + f_comment[hantei_h.h] + "』状態です。"
 img2 = f_images[hantei_h.h]
-fukai2 = "さらにちなみに現在の東京都千代田区の気温は" + str(fukai_t.temp_array_t[hantei.time]) + "度、湿度は" + str(fukai_t.humid_array_t[hantei.time]) + "%となり、不快指数は『" + f_comment[hantei_t.m] + "』状態です。"
+fukai2 = "さらにちなみに現在の東京都千代田区の気温は" + str(fukai_t.temp_array_t[hantei_t.time]) + "度、湿度は" + str(fukai_t.humid_array_t[hantei_t.time]) + "%となり、不快指数は『" + f_comment[hantei_t.m] + "』状態です。"
 img3 = f_images[hantei_t.m]
 
 ## FLASKの起動

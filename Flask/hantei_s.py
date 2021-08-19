@@ -1,4 +1,4 @@
-import fukai
+import fukai_s
 import datetime
 
 # 現在の不快指数（予報）の表示
@@ -6,7 +6,7 @@ dt_now = datetime.datetime.now()
 time = int(dt_now.strftime('%H'))
 #print(f_index[time])
 
-now_f_index = round(fukai.f_index[time])
+now_f_index = round(fukai_s.f_index[time])
 #print(now_f_index)
 
 # 現在の不快指数（予報）による分岐

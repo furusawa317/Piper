@@ -1,3 +1,5 @@
+# 参考： https://game-allergy.hatenablog.com/entry/2021/04/11/221914
+
 import requests
 import bs4
 
@@ -15,7 +17,7 @@ for j in s.find_all('tr' , class_ ='temperature'):
     for i in j.find_all("span"):
         list_temp.append(i.string)
 
-#不要な要素を削除し、tempりストに入れ直す
+#不要な要素を削除し、tempリストに入れ直す
 temp = []
 for i in range(0,24,1):
     temp.append(list_temp[i])

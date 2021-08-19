@@ -1,7 +1,7 @@
 import fukai_h
 
 now_f_index_h = round(fukai_h.f_index_h)
-print(now_f_index_h)
+#print(now_f_index_h)
 
 # 現在の不快指数（予報）による分岐
 if now_f_index_h < 55:

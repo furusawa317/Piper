@@ -1,13 +1,13 @@
 import numpy as np
-import scraping
+import scraping_s
 
 ## アレイ化
 # 気温
-temp_array = np.array(scraping.temp, dtype=float)
+temp_array = np.array(scraping_s.temp, dtype=float)
 #print(temp_array)
 
 # 湿度
-humid_array = np.array(scraping.humid, dtype=float)
+humid_array = np.array(scraping_s.humid, dtype=float)
 #print(humid_array)
 
 ## 不快指数の計算
