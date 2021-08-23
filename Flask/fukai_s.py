@@ -1,7 +1,6 @@
 import numpy as np
 import scraping_s
 
-## アレイ化
 # 気温
 temp_array = np.array(scraping_s.temp, dtype=float)
 #print(temp_array)
