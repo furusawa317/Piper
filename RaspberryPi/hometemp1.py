@@ -1,6 +1,8 @@
 # Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 # SPDX-License-Identifier: MIT-0
+
 # 参考： https://aws.amazon.com/jp/premiumsupport/knowledge-center/iot-core-publish-mqtt-messages-python/
+# 参考： https://github.com/szazo/DHT11_Python/archive/master.zip
 
 from awscrt import io, mqtt, auth, http
 from awsiot import mqtt_connection_builder
